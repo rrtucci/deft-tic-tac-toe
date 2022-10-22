@@ -3,7 +3,6 @@ from latex_rendering import *
 from dot import *
 from BayesNet import *
 
-from graphviz import Source
 import pprint
 import pandas as pd
 
@@ -37,6 +36,7 @@ def test2(num_created_cbs=2000):
     for x in range(max_len):
         print("len=", x+1, ", count=", len_list.count(x+1))
     k = 1
+    print("cbLibXs of maximum length:")
     for cbLibX in coll_of_cbLibXs:
         if len(cbLibX) == max_len:
             print(k, ":")
@@ -45,13 +45,20 @@ def test2(num_created_cbs=2000):
             k += 1
 
 
-def test3(draw=True, memory_time=2):
+def test3(draw=True,
+          memory_time=2,
+          verbose=True,
+          j_embed=False):
     """
 
     Parameters
     ----------
     draw: bool
     memory_time: int
+    verbose: bool
+    j_embed: bool
+        True iff want to embed image in jupyter notebook. Only False will
+        draw image on console screen.
 
     Returns
     -------
@@ -65,7 +72,10 @@ def test3(draw=True, memory_time=2):
             ['X7', 'O1', 'X8', 'O3', 'X6'],
             ['X2', 'O1', 'X4', 'O0', 'X6']
         ]
+    print("Consider the following cbLibX:")
+    pprint.pprint(cbLibX)
     if draw:
+        print("cbLibX rendered on Tic-Tac-Toe grids:")
         latex = cb_list_to_latex(cbLibX, 4)
         draw_latex_str(latex)
     all_arrows = []
@@ -75,19 +85,25 @@ def test3(draw=True, memory_time=2):
                                  memory_time,
                                  graph_name=str(i),
                                  is_subgraph=True)
-        print(dot)
-        print(arrows)
+        if verbose:
+            print(dot)
+            print(arrows)
         all_dots += dot
         all_arrows += arrows
         if i == len(cbLibX)-1:
             all_dots += " }"
-            print(all_dots)
+            if verbose:
+                print(all_dots)
             if draw:
-                s = Source(all_dots,
+                print("DAG for each cb in cbLibX "
+                      "with memory_time=" + str(memory_time) + ":")
+                s = gv.Source(all_dots,
                            filename="cbLibX.gv",
                            format="png")
-                s.view()
-    print("all_arrows_list=", all_arrows)
+
+                draw_dot(s, j_embed)
+    if verbose:
+        print("all_arrows_list=", all_arrows)
     arrow_to_freq = {}
     for arrow in all_arrows:
         if arrow in arrow_to_freq.keys():
@@ -96,13 +112,18 @@ def test3(draw=True, memory_time=2):
             arrow_to_freq[arrow] = 1
     print("arrow frequencies dictionary:")
     pprint.pprint(arrow_to_freq)
-    dot_hfa, arrows_hfa = dot_for_high_freq_arrows_DAG(arrow_to_freq, 2)
-    print("dot for hfa DAG:\n", dot_hfa)
+    arr_rep_th = 2
+    dot_hfa, arrows_hfa = dot_for_high_freq_arrows_DAG(
+        arrow_to_freq, arr_rep_th)
+    if verbose:
+        print("dot for hfa DAG:\n", dot_hfa)
     if draw:
-        s = Source(dot_hfa,
+        print("high frequency arrows (hfa) DAG"
+              " with arrow repetition threshold=" + str(arr_rep_th)+ ":")
+        s = gv.Source(dot_hfa,
                    filename="G_hfa.gv",
                    format="png")
-        s.view()
+        draw_dot(s, j_embed)
     dataset = {}
     for event_i, event in enumerate(cbLibX[0]):
         dataset[event] = [0]*len(cbLibX)
@@ -110,18 +131,23 @@ def test3(draw=True, memory_time=2):
         for event_i, event in enumerate(cbLibX[0]):
             if event in cb:
                 dataset[event][cb_i] = 1
-    pprint.pprint(dataset)
+    if verbose:
+        pprint.pprint(dataset)
     dataset_df = pd.DataFrame(dataset)
+    print("dataset as pandas DataFrame:")
     print(dataset_df)
     bnet_hfa = BayesNet(arrows_hfa, dataset_df)
+    print("hfa DAG upgraded to bnet:")
     bnet_hfa.print()
 
 
 if __name__ == "__main__":
-    test1()
+    # test1()
     # test2()
-    # test3()
-    # test3(draw=False, memory_time=2)
+    test3(draw=True,
+          memory_time=2,
+          verbose=False,
+          j_embed=False)
 
 
 

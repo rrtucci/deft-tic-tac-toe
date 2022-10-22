@@ -1,3 +1,7 @@
+import graphviz as gv
+from IPython.display import display, Image
+from PIL.Image import open as open_image
+
 """dot is the language used by graphviz."""
 
 def dot_for_cb(cb, memory_time, graph_name='', is_subgraph=False):
@@ -40,7 +44,7 @@ def dot_for_cb(cb, memory_time, graph_name='', is_subgraph=False):
     return dot, arrows
 
 
-def dot_for_high_freq_arrows_DAG(arrow_freq_dict, N_hfa):
+def dot_for_high_freq_arrows_DAG(arrow_freq_dict, arr_rep_th):
     """
     This method constructs what is called the "high frequency arrows DAG"
     for a particular cbLibX. It returns the dot string describing this
@@ -52,13 +56,15 @@ def dot_for_high_freq_arrows_DAG(arrow_freq_dict, N_hfa):
     the A_cb, we get the arrow frequency dictionary 'arrow_freq_dict'.
 
     In constructing the dot/DAG returned by this method, we keep only arrows
-    with a repetition number greater or equal to N_hfa.
+    with a repetition number greater or equal to the arrow repetition 
+    threshold 'arr_rep_th'
+    .
 
     Parameters
     ----------
     arrow_freq_dict: dict[(str,str), int]
 
-    N_hfa: int
+    arr_rep_th: int
 
     Returns
     -------
@@ -68,9 +74,33 @@ def dot_for_high_freq_arrows_DAG(arrow_freq_dict, N_hfa):
     arrows = []
     dot = "digraph {\n"
     for arrow, freq in arrow_freq_dict.items():
-        if freq >= N_hfa:
+        if freq >= arr_rep_th:
             arrows.append(arrow)
             dot += arrow[0] + " -> " + arrow[1] + \
                 ' [label=' + str(freq) + "];\n"
     dot += "}\n"
     return dot, arrows
+
+def draw_dot(s, j_embed):
+    """
+    using display(s) will draw the graph but will not embed it permanently
+    in the notebook. To embed it permanently, must generate temporary image
+    file and use Image(). display(s)
+
+    Parameters
+    ----------
+    s: output of graphviz Source
+    j_embed: bool
+        True iff want to embed image in jupyter notebook. Only False will
+        draw image on console screen.
+
+    Returns
+    -------
+    None
+
+    """
+    x = s.render("tempo", format='png', view=False)
+    if j_embed:
+        display(Image(x))
+    else:
+        open_image("tempo.png").show()
