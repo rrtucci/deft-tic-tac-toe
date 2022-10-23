@@ -5,7 +5,7 @@
 This repo includes a Jupyter notebook
 [(here)](https://github.com/rrtucci/deft-tic-tac-toe/blob/master/deft_tic_tac_toe.ipynb)
 that
-takes its software through its paces.
+takes the software through its paces.
 
 The Python code in this repo generates 
 a Tic-Tac-Toe example of the DEFT 
