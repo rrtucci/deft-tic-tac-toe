@@ -4,12 +4,13 @@ from PIL.Image import open as open_image
 
 """dot is the language used by graphviz."""
 
+
 def dot_for_cb(cb, memory_time, graph_name='', is_subgraph=False):
     """
     This method returns a dot string describing a DAG. It also returns a
     list of the arrows of the DAG. The DAG is created from 'cb' as follows.
-    For every event e in cb, we draw arrows e1->e, where e1 occurs a time 1,
-    2, ..., memory_time-1, memory_time earlier e.
+    For every event e in cb, we draw arrows e1->e, where e1 occurs a time t
+    earlier than e, where t in {1, 2, ..., memory_time-1, memory_time}.
 
     Parameters
     ----------
@@ -57,8 +58,7 @@ def dot_for_high_freq_arrows_DAG(arrow_freq_dict, arr_rep_th):
 
     In constructing the dot/DAG returned by this method, we keep only arrows
     with a repetition number greater or equal to the arrow repetition 
-    threshold 'arr_rep_th'
-    .
+    threshold 'arr_rep_th'.
 
     Parameters
     ----------
@@ -81,18 +81,20 @@ def dot_for_high_freq_arrows_DAG(arrow_freq_dict, arr_rep_th):
     dot += "}\n"
     return dot, arrows
 
+
 def draw_dot(s, j_embed):
     """
-    using display(s) will draw the graph but will not embed it permanently
+    Using display(s) will draw the graph but will not embed it permanently
     in the notebook. To embed it permanently, must generate temporary image
-    file and use Image(). display(s)
+    file and use Image().display(s)
 
     Parameters
     ----------
-    s: output of graphviz Source
+    s: output of graphviz Source()
     j_embed: bool
-        True iff want to embed image in jupyter notebook. Only False will
-        draw image on console screen.
+        True iff want to embed image in jupyter notebook. If you are using a
+        python terminal instead of a jupyter notebook, only j_embed=False
+        will draw image.
 
     Returns
     -------

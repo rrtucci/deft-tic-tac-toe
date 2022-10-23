@@ -8,6 +8,13 @@ import pandas as pd
 
 
 def test1():
+    """
+
+    Returns
+    -------
+    None
+
+    """
     cb_list = []
     for _ in range(5):
         cb = create_cb()
@@ -26,6 +33,23 @@ def test1():
 
 
 def test2(num_created_cbs=2000):
+    """
+    This method creates a number 'num_created_cbs' of cbs at random using
+    cb.create_cb()'. Since the cb are created at random, sometimes the same
+    cb is created more than once. Repeated cbs are counted and their final
+    number 'num_republished_cbs' is printed. The method inserts all the
+    created cbs into a collection of cbLiXs. A description of the final
+    state of the collection of cbLiXs is printed.
+
+    Parameters
+    ----------
+    num_created_cbs: int
+
+    Returns
+    -------
+    None
+
+    """
     coll_of_cbLibXs, num_republished_cbs = \
         create_coll_of_cbLibXs(num_created_cbs)
     print("number of republished cbs=", num_republished_cbs)
@@ -57,8 +81,9 @@ def test3(draw=True,
     memory_time: int
     verbose: bool
     j_embed: bool
-        True iff want to embed image in jupyter notebook. Only False will
-        draw image on console screen.
+        True iff want to embed image in jupyter notebook. If you are using a
+        python terminal instead of a jupyter notebook, only j_embed=False
+        will draw image.
 
     Returns
     -------
@@ -119,7 +144,7 @@ def test3(draw=True,
         print("dot for hfa DAG:\n", dot_hfa)
     if draw:
         print("high frequency arrows (hfa) DAG"
-              " with arrow repetition threshold=" + str(arr_rep_th)+ ":")
+              " with arrow repetition threshold=" + str(arr_rep_th) + ":")
         s = gv.Source(dot_hfa,
                    filename="G_hfa.gv",
                    format="png")

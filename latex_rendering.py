@@ -12,8 +12,8 @@ def cb_to_latex(cb):
     This method returns a latex string representing a cb/Tic-Tac-Toe game.
     The time each X or O is played is indicated by the time enclosed in
     parenthesis. For example, X3(2) is an X played at time 2 and position 3.
-    The 3, which indicates the position on the grid, is redundant and
-    omitted if X3(2)'s position is indicated by placing it on the grid.
+    The 3, which indicates the position on the Tic-Tac-Toe grid,
+    is redundant and omitted if X3(2) is rendered inside a Tic-Tac-Toe grid.
 
     Parameters
     ----------
