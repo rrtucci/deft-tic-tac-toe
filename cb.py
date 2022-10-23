@@ -3,15 +3,15 @@ random.seed(21)
 
 """These are methods for CBs (comic books). A cb is a list of 
 chronologically ordered frames. For the Tic-Tac-Toe example considered in 
-this code, a cb is one Tic-Tac-Toe game, and a frame is just one string. For 
-example, ['X2', 'O7', 'X6', 'O4', 'X3', 'O8', 'X0'] represents a cb/game and 
-'X2' is a frame/move. The X and O refer to the player. X always plays first. 
-The numbers refer to the positions on the grid, labelled as follows: [[0,1, 
-2], [3,4,5],[6,7,8]]. 
+this code, a cb is one Tic-Tac-Toe game, and a frame is just one move 
+string. For example, ['X2', 'O7', 'X6', 'O4', 'X3', 'O8', 'X0'] represents a 
+cb/game and 'X2' is a frame/move. The X and O refer to the player. X always 
+plays first. The numbers refer to the positions on the Tic-Tac-Toe grid, 
+labelled as follows: [[0,1, 2], [3,4,5],[6,7,8]]. 
 
 In the general case considered in the arXiv paper, a frame, instead of being 
 a single string, can be a list of strings called event descriptors, 
-which represent simultaneous events. """
+which represent simultaneous events in the frame. """
 
 def cb_has_ended(cb):
     """
@@ -61,6 +61,7 @@ def next_frame(incomplete_cb):
     Parameters
     ----------
     incomplete_cb: list[str]
+
     Returns
     -------
     str
