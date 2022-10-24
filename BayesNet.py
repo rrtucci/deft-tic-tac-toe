@@ -16,7 +16,7 @@ class BayesNet:
         node names.
     dataset_df: pd.DataFrame
         A pandas DataFrame wherein the columns are the node names and the rows
-        are integers that label DAGs in a cbLib.
+        are integers that label DAGs in a cbLibX.
     nd_to_TPM: dict[str, dict()]
         dictionary mapping node name to TPM (transition probability matrix)
         of the node.

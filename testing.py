@@ -167,12 +167,12 @@ def test3(draw=True,
 
 
 if __name__ == "__main__":
-    # test1()
+    test1()
     # test2()
-    test3(draw=True,
-          memory_time=2,
-          verbose=False,
-          j_embed=False)
+    # test3(draw=True,
+    #       memory_time=2,
+    #       verbose=False,
+    #       j_embed=False)
 
 
 
