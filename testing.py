@@ -52,6 +52,7 @@ def test2(num_created_cbs=2000):
     """
     coll_of_cbLibXs, num_republished_cbs = \
         create_coll_of_cbLibXs(num_created_cbs)
+    print("number of created cbs=", num_created_cbs)
     print("number of republished cbs=", num_republished_cbs)
     print("number of cbLibXs=", len(coll_of_cbLibXs))
     len_list = [len(x) for x in coll_of_cbLibXs]
