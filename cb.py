@@ -176,6 +176,8 @@ def create_coll_of_cbLibXs(num_created_cbs):
             for cbLibX in coll_of_cbLibXs:
                 if cb_already_in_cbLib(new_cb, cbLibX):
                     num_republished_cbs += 1
+                    new_cb_has_found_home = True
+                    break  # go to next cb
                 else:
                     if cb1_is_smaller_that_cb2(new_cb, cbLibX[0]):
                         cbLibX.append(new_cb)
