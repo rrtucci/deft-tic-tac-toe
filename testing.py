@@ -103,6 +103,8 @@ def test3(draw=True,
     if draw:
         print("cbLibX rendered on Tic-Tac-Toe grids:")
         latex = cb_list_to_latex(cbLibX, 4)
+        if verbose:
+            print(latex)
         draw_latex_str(latex)
     all_arrows = []
     all_dots = 'digraph {\n'
@@ -124,7 +126,7 @@ def test3(draw=True,
                 print("DAG for each cb in cbLibX "
                       "with memory_time=" + str(memory_time) + ":")
                 s = gv.Source(all_dots,
-                           filename="cbLibX.gv",
+                           filename="cbLibX",
                            format="png")
 
                 draw_dot(s, j_embed)
@@ -147,7 +149,7 @@ def test3(draw=True,
         print("high frequency arrows (hfa) DAG"
               " with arrow repetition threshold=" + str(arr_rep_th) + ":")
         s = gv.Source(dot_hfa,
-                   filename="G_hfa.gv",
+                   filename="G_hfa",
                    format="png")
         draw_dot(s, j_embed)
     dataset = {}
@@ -168,12 +170,12 @@ def test3(draw=True,
 
 
 if __name__ == "__main__":
-    test1()
+    # test1()
     # test2()
-    # test3(draw=True,
-    #       memory_time=2,
-    #       verbose=False,
-    #       j_embed=False)
+    test3(draw=True,
+          memory_time=2,
+          verbose=True,
+          j_embed=False)
 
 
 
